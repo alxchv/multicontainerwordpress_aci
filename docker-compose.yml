@@ -1,10 +1,10 @@
-version: '3.x'
+version: '3.3'
 
 services:
    db:
      image: mysql:latest
      volumes:
-       - db_data:/var/lib/mysql
+       - dbdata:/var/lib/mysql
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: somewordpress
@@ -12,12 +12,12 @@ services:
        MYSQL_USER: wordpress
        MYSQL_PASSWORD: wordpress
 
-   wordpress:
+   wdocker ordpress:
      depends_on:
        - db
      image: wordpress:latest
      volumes:
-      - wordpress_data:/var/www/html
+      - wordpressdata:/var/www/html
      ports:
        - "8000:80"
      restart: always
@@ -25,6 +25,12 @@ services:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
+     healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
    redis:
      image: redis:latest
@@ -33,5 +39,9 @@ services:
      restart: always
      
 volumes:
-    db_data:
-    wordpress_data:
+  mydata:
+    driver: azure_file
+    driver_opts:
+      share_name: dbdata
+      share_name: wordpressdata
+      storage_account_name: cs2100320015de5ad22
