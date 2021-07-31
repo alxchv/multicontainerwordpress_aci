@@ -4,7 +4,7 @@ services:
    db:
      image: mysql:latest
      volumes:
-       - dbdata:/var/lib/mysql
+       - mydata:/var/lib/mysql
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: somewordpress
@@ -17,7 +17,7 @@ services:
        - db
      image: wordpress:latest
      volumes:
-      - wordpressdata:/var/www/html
+      - mydata:/var/www/html
      ports:
        - "8000:80"
      restart: always
@@ -42,6 +42,5 @@ volumes:
   mydata:
     driver: azure_file
     driver_opts:
-      share_name: dbdata
       share_name: wordpressdata
       storage_account_name: cs2100320015de5ad22
