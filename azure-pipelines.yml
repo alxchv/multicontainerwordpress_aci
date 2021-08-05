@@ -39,5 +39,3 @@ stages:
         azureContainerRegistry: '{"loginServer":"containerizedsiteacr.azurecr.io", "id" : "/subscriptions/2c780a18-ca02-4f44-8e4c-153057104a63/resourceGroups/containerized-site-rg/providers/Microsoft.ContainerRegistry/registries/containerizedsiteacr"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Run a Docker Compose command'
-
-
